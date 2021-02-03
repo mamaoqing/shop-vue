@@ -38,12 +38,12 @@
                         <i class="el-icon-caret-bottom"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">
-                            <el-dropdown-item>项目仓库</el-dropdown-item>
-                        </a>
+                        <el-dropdown-item divided command="repsd">修改密码</el-dropdown-item>
+                        <el-dropdown-item divided command="self">个人信息</el-dropdown-item>
                         <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
+
             </div>
         </div>
     </div>
@@ -68,9 +68,13 @@ export default {
     methods: {
         // 用户名下拉菜单选择事件
         handleCommand(command) {
-            if (command == 'loginout') {
+            if (command === 'loginout') {
                 localStorage.removeItem('ms_username');
                 this.$router.push('/login');
+            }else if(command === 'repsd'){
+                this.$router.push('/repsd');
+            }else if(command === 'self'){
+                this.$router.push('/self');
             }
         },
         // 侧边栏折叠

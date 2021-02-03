@@ -9,7 +9,8 @@ import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 import './assets/css/icon.css';
 import './components/common/directives';
 import 'babel-polyfill';
-
+import Axios from 'axios';
+Axios.defaults.headers.common['Authentication-Token'] = localStorage.token;
 Vue.config.productionTip = false;
 Vue.use(VueI18n);
 Vue.use(ElementUI, {
@@ -18,6 +19,19 @@ Vue.use(ElementUI, {
 const i18n = new VueI18n({
     locale: 'zh',
     messages
+});
+
+Axios.interceptors.request.use(config => {
+// 在发送请求之前做些什么
+//判断是否存在token，如果存在将每个页面header都添加token
+    if (localStorage.token) {
+        config.headers.common['Authentication-Token'] = localStorage.token
+    }
+
+    return config;
+}, error => {
+// 对请求错误做些什么
+    return Promise.reject(error);
 });
 
 //使用钩子函数对路由进行权限跳转
